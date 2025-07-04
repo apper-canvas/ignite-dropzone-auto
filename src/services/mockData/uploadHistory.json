@@ -1,0 +1,57 @@
+[
+  {
+    "Id": 1,
+    "name": "presentation.pdf",
+    "size": 2048576,
+    "type": "application/pdf",
+    "status": "completed",
+    "progress": 100,
+    "uploadedAt": "2024-01-15T10:30:00Z",
+    "url": "https://example.com/uploads/presentation.pdf",
+    "error": null
+  },
+  {
+    "Id": 2,
+    "name": "vacation-photos.zip",
+    "size": 15728640,
+    "type": "application/zip",
+    "status": "completed",
+    "progress": 100,
+    "uploadedAt": "2024-01-15T11:15:00Z",
+    "url": "https://example.com/uploads/vacation-photos.zip",
+    "error": null
+  },
+  {
+    "Id": 3,
+    "name": "report.docx",
+    "size": 524288,
+    "type": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "status": "completed",
+    "progress": 100,
+    "uploadedAt": "2024-01-15T12:00:00Z",
+    "url": "https://example.com/uploads/report.docx",
+    "error": null
+  },
+  {
+    "Id": 4,
+    "name": "spreadsheet.xlsx",
+    "size": 1048576,
+    "type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "status": "failed",
+    "progress": 0,
+    "uploadedAt": "2024-01-15T13:30:00Z",
+    "url": null,
+    "error": "File corrupted during transfer"
+  },
+  {
+    "Id": 5,
+    "name": "image.jpg",
+    "size": 3145728,
+    "type": "image/jpeg",
+    "status": "completed",
+    "progress": 100,
+    "uploadedAt": "2024-01-15T14:45:00Z",
+    "url": "https://example.com/uploads/image.jpg",
+    "error": null
+  }
+]
