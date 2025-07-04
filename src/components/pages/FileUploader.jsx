@@ -94,11 +94,58 @@ const FileUploader = () => {
     }
   }
   
-  const handleClearAll = () => {
+const handleClearAll = () => {
     setFiles([])
     toast.info('Upload queue cleared')
   }
   
+  const handleCancelAll = async () => {
+    const activeFiles = files.filter(f => f.status === 'uploading' || f.status === 'pending')
+    
+    if (activeFiles.length === 0) {
+      toast.warning('No active uploads to cancel')
+      return
+    }
+    
+    try {
+      // Cancel all uploading files
+      await Promise.all(
+        activeFiles.map(file => uploadService.cancelUpload(file.id))
+      )
+      
+      // Update file states to cancelled
+      setFiles(prev => prev.map(f => 
+        (f.status === 'uploading' || f.status === 'pending') 
+          ? { ...f, status: 'cancelled', error: 'Upload cancelled by user' }
+          : f
+      ))
+      
+      toast.success(`${activeFiles.length} upload(s) cancelled`)
+    } catch (error) {
+      toast.error('Error cancelling uploads')
+    }
+  }
+  
+  const handleClearCompleted = async () => {
+    const completedFiles = files.filter(f => f.status === 'completed')
+    
+    if (completedFiles.length === 0) {
+      toast.warning('No completed uploads to clear')
+      return
+    }
+    
+    try {
+      // Clear completed files from service
+      await uploadService.clearCompleted()
+      
+      // Remove completed files from state
+      setFiles(prev => prev.filter(f => f.status !== 'completed'))
+      
+      toast.success(`${completedFiles.length} completed upload(s) cleared`)
+    } catch (error) {
+      toast.error('Error clearing completed uploads')
+    }
+  }
   const uploadSingleFile = async (file) => {
     try {
       setFiles(prev => prev.map(f => 
@@ -253,13 +300,15 @@ const FileUploader = () => {
       )}
       
       {/* File Queue */}
-      <FileQueue
+<FileQueue
         files={files}
         onRemoveFile={handleRemoveFile}
         onPauseFile={handlePauseFile}
         onResumeFile={handleResumeFile}
         onRetryFile={handleRetryFile}
         onClearAll={handleClearAll}
+        onCancelAll={handleCancelAll}
+        onClearCompleted={handleClearCompleted}
         onStartUpload={handleStartUpload}
         isUploading={isUploading}
       />

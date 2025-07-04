@@ -68,6 +68,29 @@ class UploadService {
     await this.delay()
     this.uploadHistory = []
     return { message: 'Upload history cleared' }
+}
+  
+  // Cancel a file upload
+  async cancelUpload(fileId) {
+    await this.delay(200)
+    
+    // Find the upload in history
+    const upload = this.uploadHistory.find(item => item.Id === parseInt(fileId))
+    if (upload) {
+      upload.status = 'cancelled'
+      upload.error = 'Upload cancelled by user'
+      upload.progress = 0
+    }
+    
+    return { message: 'Upload cancelled successfully' }
+  }
+  
+  // Clear completed uploads
+  async clearCompleted() {
+    await this.delay(200)
+    
+    this.uploadHistory = this.uploadHistory.filter(item => item.status !== 'completed')
+    return { message: 'Completed uploads cleared successfully' }
   }
   
   // Get upload statistics
